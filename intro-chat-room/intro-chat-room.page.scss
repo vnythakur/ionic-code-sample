@@ -1,0 +1,193 @@
+ion-header {
+  ion-toolbar {
+    .chat-header-wrapper {
+      display: flex;
+      .chat-header {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-left: 16px;
+        .teddi-thumb {
+          width: 48px;
+          height: 48px;
+          overflow: hidden;
+        }
+        .online {
+          width: 12px;
+          height: 12px;
+          background-color: #2EFF80;
+          border-radius: 50%;
+          margin: -8px 8px 0;
+        }
+        .bot-sec {
+          text-align: left;
+          line-height: 10px;
+          h3, p {
+            margin: 0;
+          }
+          h3 {
+            font-family: 'OpenSansSemiBold';
+            font-size: 20px;
+          }
+          p {
+            font-family: 'OpenSansRegular';
+            font-size: 11px;
+          }
+        }
+      }
+
+      .register-btn {
+        --background: none;
+      }
+    }
+    
+  }
+}
+
+ion-content {
+  .chatBox {
+    margin: 8px;
+
+    .avatar {
+      margin-top: 10px;
+      ion-avatar {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    .msg-sec {
+      display: flex;
+      flex-direction: column;
+      font-family: 'OpenSansRegular';
+      max-width: 75%;
+      ion-card{
+        font-size: 14px;
+        color: #333333;
+        padding: 16px;
+        box-shadow: none;
+      }
+      .msg-date {
+        font-size: 12px;
+        color: #9B9B9B;
+        width: 100%;
+        text-align: right;
+        margin-right: 10px;
+        padding-right: 16px;
+      }
+    }
+
+    &.receive {
+      display: flex;
+      
+      .msg-sec {
+        align-items: flex-start;
+        ion-card {
+          --background: var(--ion-color-primary-contrast);
+          border-radius: 0 16px 16px 16px;
+          word-break: break-word;
+        }
+      }
+    }
+
+    &.send {
+      .msg-sec {
+        max-width: 100%;
+        align-items: flex-end;
+        ion-card {
+          max-width: 80%;
+          --background: #C3F1D2;
+          border-radius: 16px 16px 0 16px;
+          word-break: break-word;
+        }
+        .msg-date {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  &.typing {
+    &::after{
+      content: "typing...";
+      bottom: 4px;
+      left: 4px;
+      color: #333333;
+      z-index: 99999;
+      position: absolute;
+      font-size: 18px;
+    }
+  }
+
+
+  .tooltip-teddi-talk {
+    ion-card {
+      --background: #8c8c8c !important;
+      color: #fff !important;
+      margin-right: 16px;
+    }
+  }
+
+}
+
+ion-footer {
+  &::before {
+    display: none;
+  }
+  --background: var(--ion-color-light);
+  background: var(--ion-color-light);
+
+  ion-item {
+    --min-height: 56px;
+    --border-radius: 50px;
+    font-family: 'OpenSansRegular';
+    --highlight-background: none;
+    ion-input {
+      --padding-start: 4px !important;
+    }
+  }
+
+  ion-fab-button {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .predictive {
+    padding: 0;
+    border-top: 1px solid #cccccc;
+    ion-col {
+      color: #272323;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      border-right: 1px solid #cccccc;
+      min-height: 56px;
+      font-size: 4vw;
+      &:last-of-type {
+        border-right: 0px;
+      }
+
+    }
+  }
+}
+
+.msg-sec {
+  display: flex;
+  ion-col {
+    &:first-of-type {
+      flex: 1;
+    }
+    &:last-of-type {
+      flex-grow: inherit;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .mic {
+        color: #424242;
+        font-size: 36px;
+        padding: 0 8px 0 0;
+      }
+    }
+  }
+}

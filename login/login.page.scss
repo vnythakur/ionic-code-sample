@@ -1,0 +1,102 @@
+.input-email {
+  background-image: url(../../../assets/icon/username.svg);
+}
+.input-password {
+  background-image: url(../../../assets/icon/password-light.svg);
+}
+
+ion-content{
+  --background: var(--ion-color-primary);
+  
+  .app-container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+
+    .teddi-wrapper {
+      flex: 1;
+      min-height: 296px;
+      background: url('../../../assets/images/question-mark-teddy.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center bottom;
+    }
+
+    .login-wrapper {
+      flex: 1;
+      margin: 0;
+      padding: 16px 24px;
+      h2 {
+        color: var(--ion-color-primary-contrast);
+        font-family: 'OpenSansSemiBold';
+        font-size: 24px;
+        margin: 0 0 16px;
+      }
+
+      .input-box {
+        .app-input-item {
+          color: var(--ion-color-primary-contrast);
+          --highlight-color-focused: var(--ion-color-primary-contrast);
+          --highlight-color-valid: var(--ion-color-primary-contrast);
+          --border-color: var(--ion-color-primary-contrast);
+          font-family: 'OpenSansRegular';
+          font-size: 16px;
+          ion-label{
+            color: var(--ion-color-primary-contrast) !important;
+          }
+          .input-icon {
+            background-size: 24px 24px;
+          }
+        }
+      }
+
+      .remember-me {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        ion-item {
+          --background: transparent;
+          --inner-border-width: 0;
+          --padding-start: 0;
+          color: var(--ion-color-primary-contrast);
+          font-family: 'OpenSansRegular';
+          font-size: 14px;
+          --inner-padding-end: 0;
+          &:last-of-type{
+            text-align: right;
+          }
+          ion-checkbox {
+            margin-right: 8px;
+            --background: transparent;
+            --background-checked: transparent;
+            --border-color: var(--ion-color-primary-contrast);
+            --border-color-checked: var(--ion-color-primary-contrast);
+            --checkmark-color: var(--ion-color-primary-contrast);
+          }
+        }
+      }
+
+      .login-btns {
+        ion-row {
+          margin-top: 8px;
+        }
+      }
+    }
+
+    &.h600 {
+      .login-wrapper {
+        
+      }
+    }
+
+    &.h800 {
+      .login-wrapper {
+      }
+    }
+  }
+}
+
+span.error {
+  font-size: 12px !important;
+  color: red !important;
+}

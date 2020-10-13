@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="chat-header-wrapper">
+      <div class="chat-header" [ngStyle]="{'margin-left': chapterType !== 'introduction' ? '0' : '16px'}">
+        <!-- <ion-back-button *ngIf="chapterType !== 'introduction'"></ion-back-button> -->
+        <ion-button fill="clear" *ngIf="chapterType !== 'introduction'" color="light" (click)="goTo('chapter-list')">
+          <ion-icon slot="icon-only" name="back-arrow-chat"></ion-icon>
+        </ion-button>
+        <div class="teddi-thumb">
+          <img src="assets/images/teddi-thumb.png" alt="">
+        </div>
+        <div class="online"></div>
+        <div class="bot-sec">
+          <h3>Teddi</h3>
+          <p>Online</p>
+        </div>
+      </div>
+      <div>
+        <ion-button class="register-btn" (click)="openFeedbackPopup()">
+          <ion-icon slot="icon-only" src="assets/icon/feedback.svg"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [class.typing]="isBotTyping" (touchend)="logScrolling()" [scrollEvents]="true" (ionScroll)="logScrolling($event)" (ionScrollEnd)="onScrollEnd($event)">
+
+  <ion-infinite-scroll threshold="200px" position="top" (ionInfinite)="loadPreviousChat($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-grid class="ion-no-padding">
+      <ion-row *ngFor="let message of allMessages; let i=index;">
+
+          <ion-col class="chatBox receive" *ngIf="message.from.id !== conversationId">
+            <div class="avatar">
+              <ion-avatar>
+                <img src="assets/images/teddi-thumb.png">
+              </ion-avatar>
+            </div>
+            <div class="msg-sec" [class.tooltip-teddi-talk]="selectedMsgCls === 'message_'+i" title="Teddi Talk" >
+              <ion-card *ngIf="message.text !== 'app-videoplayer' && message.text !== 'app-image'" (click)="onMsgClick(message, $event)" 
+                    (press)="teddiTalk(message, i)" (pressUp)="teddiTalkStop()" [innerHtml]="getParsedNote(message.text)">
+              </ion-card>
+              <ion-card *ngIf="message.text === 'app-videoplayer'" (click)="onMsgClick(message, $event)">
+                <img src="assets/images/videoplayerthumb.png" width="200px" height="114px" alt="" srcset="">
+              </ion-card>
+              <ion-card *ngIf="message.text === 'app-image'" (click)="onMsgClick(message, $event)">
+                <img [src]="message.imgUrl" width="200px" height="114px" alt="" srcset="">
+              </ion-card>
+              <div class="msg-date">
+                <span>{{ msgTime(message.timestamp) }}</span>
+              </div>
+            </div>
+          </ion-col>
+
+          <ion-col class="chatBox send" *ngIf="message.from.id == conversationId">
+            <div class="msg-sec">
+              <ion-card>
+                {{ message.text }}
+              </ion-card>
+              <div class="msg-date">
+                <span>{{ msgTime(message.timestamp) }}</span>
+              </div>
+            </div>
+          </ion-col>
+
+      </ion-row>
+  </ion-grid>
+
+  <ion-grid class="ion-margin-top" *ngIf="enterBtn !== ''">
+    <ion-row>
+      <ion-col size="10" offset="1">
+        <ion-button class="app-btn" shape="round" expand="block" (click)="letsGo()">{{ enterBtn }}</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="showScrollBottomBtn">
+    <ion-fab-button size="small" (click)="scrollToBottom()">
+      <ion-icon name="chevron-down-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+
+<ion-footer *ngIf="enterBtn === ''">
+
+  <ion-grid>
+    <ion-row class="msg-sec">
+      <ion-col>
+        <ion-item>
+          <ion-input [disabled]="isBotTyping || sendBtnDisabled" autocapitalize="on" autocomplete="on" autocorrect="on" [(ngModel)]="message" [placeholder]="allMessages.length === 0 ? 'Say hello' : 'Type your message'"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-icon class="mic" (press)="talk2Teddi()" (pressUp)="talk2TeddiStop()" 
+          name="mic-outline"></ion-icon>
+          <p [class.tooltip]="talkingToTeddi" title="Talk to Teddi"></p>
+        <ion-fab-button [disabled]="isBotTyping || sendBtnDisabled" class="app-btn" (click)="sendMessage()">
+          <ion-icon src="assets/icon/send.svg"></ion-icon>
+        </ion-fab-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="predictive" *ngIf="predictiveTextArr.length > 0">
+    <ion-row>
+        <ion-col *ngFor="let opt of predictiveTextArr" (click)="message = opt;">{{ opt }}</ion-col>
+    </ion-row>
+  </ion-grid>
+  
+
+</ion-footer>
